@@ -1,0 +1,58 @@
+{% extends 'frontend/base.html' %}
+{% load static %} 
+{% block title %}
+Login 
+{% endblock %}
+{% block content %}
+<section class="login-section">
+   <div class="container">
+      <div class="row align-items-center">
+         <div class="col-sm-12 col-md-2 col-lg-3"></div>
+         <div class="social_login">
+            <h1 style="text-align: center">Login with Email</h1>
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div class="contact-box">
+               <form action="" method="post">
+                  <div class="socialelements row justify-content-center">
+                     <div class="col-md-12 col-sm-12">
+                        <div class="social-buttons mb-2 text-center">
+                           <a style="color:white" href="login/google" class="social-button google-social-button">
+                           <img height="50px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThrlaPTiDvfC24xZP2MdareGEoNxolGAKWEw&s">
+                           <span class="pstyle"> Use Google </span>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="col-md-12 col-sm-12">
+                        <div class="social-buttons text-center">
+                           <a style="color:white" href="login/facebook" class="social-button facebook-social-button pstyle">
+                           <img height="50px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyNQrrEWZOh6sFs6_BLCHVqSBMzCFuNHijeA&s">
+                           Use Facebook
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+                  <div>&nbsp;</div>
+               </form>
+            </div>
+            <style>
+               /* Add any additional styling here */
+               .line-container {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               }
+               .line {
+               flex: 1;
+               border-top: 1px solid #ccc;
+               margin: 0 10px;
+               }
+               .pstyle{
+               color:white !important;
+               }
+            </style>
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock %}

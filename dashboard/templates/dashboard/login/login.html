@@ -1,0 +1,157 @@
+{%load static%}
+    
+
+<!doctype html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    <meta charset="utf-8" />
+    <title>Login | GoldPlayer </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Rider Management System" name="description" />
+    <meta content="Rider" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="">
+    <!-- App css -->
+<link href="{% static 'dashboard/build/css/bootstrap.min.css'%}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/icons.min.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/app.min.css'%}" id="app-style" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/libs/toastr/build/toastr.min.css'%}" rel="stylesheet" type="text/css">
+
+
+</head>
+
+
+    <body>
+    
+<div id="preloader">
+    <div id="status">
+        <div class="spinner-chase">
+            <div class="chase-dot"></div>
+            <div class="chase-dot"></div>
+            <div class="chase-dot"></div>
+            <div class="chase-dot"></div>
+            <div class="chase-dot"></div>
+            <div class="chase-dot"></div>
+        </div>
+    </div>
+</div>
+
+        <div class="account-pages my-5 pt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card overflow-hidden">
+                            <div class="bg-primary-subtle">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="text-primary p-4">
+                                            <h5 class="text-primary">Welcome Back !</h5>
+                                            <p>Sign in to continue to Gaming</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 align-self-end">
+                                        <img src="" alt=""
+                                            class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="auth-logo">
+                                    <a href="login.html" class="auth-logo-light">
+                                        <div class="avatar-md profile-user-wid mb-4">
+                                            <span class="avatar-title rounded-circle bg-light">
+                                                <img src="" alt=""
+                                                    class="rounded-circle" height="34">
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <a href="login.html" class="auth-logo-dark">
+                                        <div class="avatar-md profile-user-wid mb-4">
+                                            <span class="avatar-title rounded-circle bg-light">
+                                                <img src="" alt=""
+                                                    class="rounded-circle" height="34">
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="p-2">
+                                    <form class="form-horizontal" method="post" action="{% url 'dashboard:login' %}">
+                                            {% csrf_token %}
+                                            {{form.errors}}
+                                            {% if messages %}
+                                            {% for msg in messages %}
+                                            <div class="alert alert-{{ msg.tags }} alert-dismissible text-bg-{{ msg.tags }} border-0 fade show" role="alert">
+                                                <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <strong>{% if msg.tags == 'success' %}Success{% elif msg.tags == 'warning' %}Warning{% endif %} - </strong>{{ msg.message }}
+                                            </div>
+                                            {% endfor %}
+                                            {% endif %}
+                                            <div class="mb-3">
+                                                <label for="username">Email <span
+                                                        class="text-danger"></span></label>
+                                                <input name="useremail" type="email" id="email"
+                                                    class="form-control "
+                                                    value="" id="username" placeholder="Enter email" autocomplete="email" autofocus>
+                                                </div>
+                                            <div class="mb-3">
+                                                <label for="userpassword">Password <span
+                                                        class="text-danger"></span></label>
+                                                <input type="password" name="password" id="pass"
+                                                    class="form-control  "
+                                                    id="" value="" placeholder="Enter password">
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="remember"
+                                                    id="customControlInline">
+                                                <label class="form-check-label"
+                                                    for="customControlInline">Remember me</label>
+                                            </div>
+                                            <div class="mt-3">
+                                                <button class="btn btn-primary w-100 waves-effect waves-light"
+                                                    type="submit">Log In</button>
+                                            </div>
+                                            <div class="mt-4 text-center">
+                                                <a href="#" class="text-muted"><i
+                                                        class="mdi mdi-lock me-1"></i> Forgot your password?</a>
+                                            </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 text-center">
+                            <p>© 2024 Gaming | powered by Kitwosd</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+<!-- JAVASCRIPT -->
+<script src="{% static 'dashboard/build/libs/jquery/jquery.min.js'%}"></script>
+<script src="{% static 'dashboard/build/libs/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'dashboard/build/libs/metismenu/metisMenu.min.js'%}"></script>
+<script src="{% static 'dashboard/build/libs/simplebar/simplebar.min.js'%}"></script>
+<script src="{% static 'dashboard/build/libs/node-waves/waves.min.js'%}"></script>
+<script src="{% static 'dashboard/build/libs/toastr/toastr.js'%}"></script>;
+
+                <!-- App js -->
+        <script src="{% static 'dashboard/build/js/app.min.js'%}"></script>
+
+                <script>
+            function login(e) {
+                var email = e.closest('.d-flex').querySelector('.email').innerHTML.slice(8);
+                var password = e.closest('.d-flex').querySelector('.pass').innerHTML.slice(7);
+                document.getElementById('email').value = email;
+                document.getElementById('pass').value = password;
+            }
+        </script>
+            <!-- App js -->
+        <script>
+                                                        </script>
+        
+</body>
+
+
+</html>

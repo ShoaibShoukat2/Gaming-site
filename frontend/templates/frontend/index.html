@@ -1,0 +1,144 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}
+Top Up Games, Buy Gift cards, Vouchers and Pc games in Nepal
+{% endblock %}
+{% block content %}
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container header-link">
+   <div class="warpertop">
+      <a href="#popular" class="linkbtn">🔥 Trending </a>&nbsp;&nbsp;
+      <a href="#latest" class="linkbtn">🌟 Latest </a>&nbsp;&nbsp;
+      {% for category in category %}
+      <a href="#{{category.name}}" class="linkbtn">{{category.name}}</a>&nbsp;&nbsp;
+      {% endfor %}
+      
+      <a href="" target="_blank" class="linkbtn">Help</a>
+   </div>
+</div>
+
+
+<!-- TRENDING  section start -->
+<section id="popular" class="popular-section">
+   <div class="container">
+      <div class="row">
+         <div class="col">
+            <div class="header-text-service">
+               <h4 class="topsectiontext">🔥 TRENDING</h4>
+            </div>
+         </div>
+      </div>
+      <div class="looplist">
+         {% for product in trending_products %}
+         <div class="looop">
+            <a href="{% url 'product:product_detail' product.slug %}">
+               <div class="img-box">
+                  <img src="{{product.product_image.url}}" alt="no image found -{{product.product_name}}" title="{{product.product_name}}" class="img-fluid" />
+                  <div class="tags"></div>
+                  <p class="homeitemtitle">
+                     {{product.product_name}}
+                  </p>
+            </a>
+            </div>
+         </div>
+         {% endfor  %}
+        
+      </div>
+   </div>
+</section>
+
+<!-- end TRENDING -->
+
+<!-- latest section start -->
+<section id="latest" class="popular-section">
+   <div class="container">
+      <div class="row">
+         <div class="col">
+            <div class="header-text-service">
+               <h4 class="topsectiontext">🌟 NEW IN STORE</h4>
+            </div>
+         </div>
+      </div>
+      <div class="looplist">
+         {% for lts_product in latest_product %}
+         <div class="looop">
+            <a href="{% url 'product:product_detail' lts_product.slug %}">
+               <div class="img-box">
+                  <img src="{{lts_product.product_image.url}}" alt="no image found -{{lts_product.product_name}}" title="{{lts_product.product_name}}" class="img-fluid" />
+                  <div class="tags"></div>
+                  <p class="homeitemtitle">
+                     {{lts_product.product_name}}
+                  </p>
+            </a>
+            </div>
+         </div>
+         {% endfor %}
+        
+         {% comment %} <div class="looop">
+            <a href="top-up/free-fire-diamonds/3.html">
+               <div class="img-box">
+                  <img src="{% static 'frontend/assets/uploads/category/6621f56d45c481713501549.png' %}" alt="..." title="Free Fire Diamonds" class="img-fluid" />
+                  <div class="tags">
+                     <span>10%</span>
+                  </div>
+               </div>
+               <p class="homeitemtitle">
+                  Free Fire Diamonds
+               </p>
+            </a>
+         </div> {% endcomment %}
+      </div>
+   </div>
+</section>
+<!-- end latest section -->
+
+<!-- start category wise product section-->
+{% for category in   category %}
+<section id="{{category.name}}" class="topup-section">
+   <div class="container">
+    
+      <div class="row">
+         <div class="col">
+            <div class="header-text-service">
+               <h4 class="topsectiontext">{{category.name}}</h4>
+            </div>
+         </div>
+      </div>
+      <div class="looplist" id="looplist-default">
+         {% for product in category.games_category.all %}
+         <div class="looop">
+            <a href="{% url 'product:product_detail' product.slug %}">
+               <div class="img-box" style="padding: 10px 10px 0px;">
+                  <img src="{{product.product_image.url}}" alt="no image found-{{product.product_name}}" title="{{product.product_name}}" class="img-fluid" />
+                  <p class="homeitemtitle">
+                     {{product.product_name}}
+                  </p>
+               </div>
+            </a>
+         </div>
+         {% endfor %}
+         
+        
+      </div>
+      <div class="show-more-button-container mt-4 text-center">
+         <button id="show-more-button" class="btn btn-sm" style="background: #FFC354;">Show More</button>
+         <button id="show-less-button" class="btn btn-sm" style="display: none; background: #FFC354;">Show Less</button>
+      </div>
+      
+     
+      
+   </div>
+   
+</section>
+{% endfor %}
+<!-- end category wise product section -->
+
+
+{% endblock %}

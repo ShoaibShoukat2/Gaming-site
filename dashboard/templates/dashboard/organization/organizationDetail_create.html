@@ -1,0 +1,280 @@
+{% extends 'dashboard/base_index/base.html' %}
+{% load static %}
+{% block title %}
+Add Organization detail
+{% endblock %}
+{% block body %}
+<link href="{% static 'dashboard/build/css/bootstrap.min.css'%}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/icons.min.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/app.min.css'%}" id="app-style" rel="stylesheet" type="text/css" />
+
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="main-content">
+    <div class="page-content">
+        <!-- Start content -->
+        <div class="container-fluid">
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <blockquote>Organization detail</blockquote>
+                            
+                            <form  method="post" enctype="multipart/form-data" action="{% if instance %}{% url 'dashboard:add_OrganizationSetting'  %}{% else %}{% url 'dashboard:add_OrganizationSetting' %}{% endif %}" >
+                                {% csrf_token %}
+                                {{form.errors}}
+                                {% if messages %}
+                                {% for msg in messages %}
+                                <div class="alert alert-{{ msg.tags }} alert-dismissible text-bg-{{ msg.tags }} border-0 fade show"
+                                    role="alert">
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                    <strong>{% if msg.tags == 'success' %}Success{% elif msg.tags == 'warning' %}Warning{% endif %} -
+                                    </strong>{{ msg.message }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+
+
+                                {% comment %} <div class="row">
+                                   
+
+                                    {% for field in form %}
+                                    <div class="col-xl-6">
+
+                                        {{field.label}}
+                                        <div class="mb-3">
+                                            {{field}}
+                                        </div>
+                                
+                                    </div>
+                                    {% endfor %}
+                                   
+
+                                </div>  {% endcomment %}
+
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="mb-3">
+                                        <label class="form-label">Site title</label>
+                                        <input type="text" name="{{ form.site_title.name }}" id="{{ form.site_title.id_for_label }}" class="form-control"
+                                        value="{% if instance %}{{ instance.site_title }}{% endif %}" placeholder="Enter site title" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="{{ form.logo.id_for_label }}" class="form-label">Logo :</label>
+                                            <input type="file" name="{{ form.logo.name }}" id="{{ form.logo.id_for_label }}" class="form-control" {% if not instance %}required{% endif %} onchange="showPreview(this);">
+                                            <div id="logoContainer" style="width:auto; height:auto;">
+                                                <img class="img-fluid" id="logoPreview" src="{% if instance %}{{ instance.logo.url }}{% endif %}" alt="" >
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Description</label>
+                                            <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" class="form-control" placeholder="Enter description" required>{% if instance %}{{ instance.description }}{% endif %}</textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Keyword</label>
+                                            <input type="text" name="{{ form.keyword.name }}" id="{{ form.keyword.id_for_label }}" class="form-control"
+                                            value="{% if instance %}{{ instance.keyword }}{% endif %}" placeholder="Enter keyword" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta name</label>
+                                            <input type="textarea" name="{{ form.meta_name.name }}" id="{{ form.meta_name.id_for_label }}" class="form-control"
+                                            value="{% if instance %}{{ instance.meta_name }}{% endif %}" placeholder="Enter meta name" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta description</label>
+                                            <textarea name="{{ form.meta_description.name }}" id="{{ form.meta_description.id_for_label }}" class="form-control" placeholder="Enter meta deacription" required>{% if instance %}{{ instance.meta_description }}{% endif %}</textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta property</label>
+                                            <textarea name="{{ form.meta_property.name }}" id="{{ form.meta_property.id_for_label }}" class="form-control" placeholder="Enter meta nameproperty" required>{% if instance %}{{ instance.meta_property }}{% endif %}</textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="{{ form.favicon.id_for_label }}" class="form-label">Favicon :</label>
+                                            <input type="file" name="{{ form.favicon.name }}" id="{{ form.favicon.id_for_label }}" class="form-control" {% if not instance %}required{% endif %} onchange="showPreview(this);">
+                                            <div id="faviconContainer" style="width:auto; height:auto;">
+                                                <img class="img-fluid" id="faviconPreview" src="{% if instance %}{{ instance.favicon.url }}{% endif %}" alt="" >
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="{{ form.help_center.id_for_label }}">Help Center</label>
+                                        <textarea name="{{ form.help_center.name }}" id="{{ form.help_center.id_for_label }}" class="form-control" placeholder="Enter help center" required>{% if instance %}{{ instance.help_center }}{% endif %}</textarea>
+                                    </div>
+
+                                    
+
+                                </div>
+                                <!-- end row-->
+                                <div class="col-auto">
+                                    {% if form.initial %}
+                                        <button type="submit" class="btn btn-danger chat-send waves-effect waves-light">Update Organization detail</button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-danger chat-send waves-effect waves-light">Add Organization detail </button>
+                                    {% endif %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div> <!-- content -->
+    </div>
+    <style>
+        select {
+            word-wrap: normal;
+            width: 567px;
+            height: 40px;
+            display: flex;
+            border: 1px solid #ccc;
+        }
+        </style>
+        <style>
+            #imageContainer {
+                max-width: 100%;
+                max-height: 80%;
+                border: 1px solid #ccc;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+
+            #imagePreview {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        </style>
+        <script>
+            function showPreview(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('imagePreview').src = e.target.result;
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            function showPreview1(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('imagePreview1').src = e.target.result;
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+        <script>
+            function validatePassword1() {
+                const password1 = document.getElementById('{{ user_form.password1.id_for_label }}').value;
+                const password2 = document.getElementById('{{ user_form.password2.id_for_label }}').value;
+        
+                // Check if passwords match
+                if (password1 !== password2) {
+                    document.getElementById('password-message1').innerText = 'Passwords do not match.';
+                    return;
+                }
+        
+                // Check if password contains both numbers and alphabetic characters until it reaches 8 characters
+                if (password1.length < 8 || (!/\d/.test(password1) || !/[a-zA-Z]/.test(password1))) {
+                    document.getElementById('password-message1').innerText = 'Password should contain both numbers and alphabetic characters and be at least 8 characters long.';
+                    return;
+                }
+        
+                // Check for similarity with other personal information
+                const personalInfo = ['username', 'email', 'name']; // Example personal information
+                for (const info of personalInfo) {
+                    if (password1.toLowerCase().includes(info.toLowerCase())) {
+                        document.getElementById('password-message1').innerText = 'Password can\'t be too similar to your other personal information.';
+                        return;
+                    }
+                }
+        
+                // Check for common passwords
+                const commonPasswords = ['password', '123456', 'qwerty']; // Example common passwords
+                if (commonPasswords.includes(password1.toLowerCase())) {
+                    document.getElementById('password-message1').innerText = 'Password can\'t be a commonly used password.';
+                    return;
+                }
+        
+                // Check if password is entirely numeric
+                if (/^\d+$/.test(password1)) {
+                    document.getElementById('password-message1').innerText = 'Password can\'t be entirely numeric.';
+                    return;
+                }
+        
+                document.getElementById('password-message1').innerText = '';
+            }
+        
+            
+            function togglePasswordVisibility(inputId) {
+                const input = document.getElementById(inputId);
+                const eyeIcon = document.getElementById('eye-icon-' + inputId.split('-').pop());
+        
+                if (input.type === "password") {
+                    input.type = "text";
+                    eyeIcon.classList.remove('bi-eye');
+                    eyeIcon.classList.add('bi-eye-slash');
+                } else {
+                    input.type = "password";
+                    eyeIcon.classList.remove('bi-eye-slash');
+                    eyeIcon.classList.add('bi-eye');
+                }
+            }
+        </script>
+        <script>
+            function validatePassword(input) {
+                const password = input.value;
+                const email = document.getElementById('{{ user_form.email.id_for_label }}').value;
+        
+                // Check if password contains both numbers and alphabetic characters
+                if (!/\d/.test(password) || !/[a-zA-Z]/.test(password) || password.length < 8) {
+                    document.getElementById('password-message').innerText = 'Password should contain both numbers and alphabetic characters, and be at least 8 characters long.';
+                    return;
+                }
+        
+                // Check for similarity with other personal information
+                const personalInfo = ['username', 'email', 'name']; // Example personal information
+                for (const info of personalInfo) {
+                    if (password.toLowerCase().includes(info.toLowerCase())) {
+                        document.getElementById('password-message').innerText = 'Password can\'t be too similar to your other personal information.';
+                        return;
+                    }
+                }
+        
+                // Check for common passwords
+                const commonPasswords = ['password', '123456', 'qwerty']; // Example common passwords
+                if (commonPasswords.includes(password.toLowerCase())) {
+                    document.getElementById('password-message').innerText = 'Password can\'t be a commonly used password.';
+                    return;
+                }
+        
+                // Check if password is similar to email
+                if (password.toLowerCase().includes(email.split('@')[0].toLowerCase()) || password.toLowerCase().includes(email.split('@')[1].toLowerCase())) {
+                    document.getElementById('password-message').innerText = 'Password can\'t be too similar to your email.';
+                    return;
+                }
+        
+                document.getElementById('password-message').innerText = '';
+            }
+        </script>
+    
+    {%endblock%}

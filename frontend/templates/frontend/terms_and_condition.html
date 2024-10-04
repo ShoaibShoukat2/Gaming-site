@@ -1,0 +1,21 @@
+{% extends 'frontend/base.html' %}
+{% load static %} 
+{% block title %}
+Term and condition 
+{% endblock %}
+{% block content %}
+<section class="padding-x-120">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="custom-card p-3 bg-gradient">
+                <p>
+                    {{term_and_condition_instance.terms|safe}}
+                </p>
+                
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}

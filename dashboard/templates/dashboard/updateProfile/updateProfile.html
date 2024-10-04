@@ -1,0 +1,91 @@
+{% extends 'dashboard/base_index/base.html' %}
+{% load static %}
+{% block title %}
+Update Profile
+{% endblock %}
+{% block body %}
+<link href="{% static 'dashboard/build/css/bootstrap.min.css'%}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/icons.min.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/app.min.css'%}" id="app-style" rel="stylesheet" type="text/css" />
+
+<style>
+    #id_first_name, #id_last_name, #id_phone_no, #id_avatar, #id_email {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">Update Profile</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <blockquote>Basic Information</blockquote>
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{form.errors}}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }} alert-dismissible text-bg-{{ message.tags }} border-0 fade show" role="alert">
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            <strong>{{ message.tags|capfirst }} - </strong>{{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                                <div class="row">
+                                    <div class="col-xl-6">
+
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label"> Name <span class="text-danger"></span></label>
+                                            {{ form.name }}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="id_email" class="form-label">Email <span class="text-danger"></span></label>
+                                            {{ form.email }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-xl-6">
+                                        <div class="mb-3">
+                                            <label for="id_phone_no" class="form-label">Phone Number <span class="text-danger"></span></label>
+                                            {{ form.phone_no }}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="id_avatar" class="form-label">Image <span class="text-danger"></span></label>
+                                            {{ form.avatar }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'dashboard/build/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'dashboard/build/js/app.min.js' %}"></script>
+
+{% endblock %}

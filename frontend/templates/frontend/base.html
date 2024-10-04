@@ -1,0 +1,318 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="description" content="{{organization_info.description}}">
+      <meta name="keywords" content="{{organization_info.keyword}}">
+      <link rel="shortcut icon" href="{{organization_info.favicon.url}}" type="image/x-icon">
+      <link rel="apple-touch-icon" href="{{organization_info.favicon.url}}">
+      <title>{{organization_info.site_title}}
+        {% block title %} 
+        {% endblock %}
+        </title>
+      <link rel="icon" type="image/png" sizes="16x16" href="{{organization_info.favicon.url}}">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="apple-mobile-web-app-title" content="{{organization_info.keyword}}">
+      <meta itemprop="name" content="{{organization_info.meta_name}}">
+      <meta itemprop="description" content="{{organization_info.meta_description}}">
+      <meta property="og:type" content="website">
+      <meta property="og:title" content="{{organization_info.meta_name}}">
+      <meta property="og:description" content="{{organization_info.meta_property}}">
+      <meta property="og:image" content="{{organization_info.logo.url}}" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="/">
+      <meta name="twitter:card" content="summary_large_image">
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/bootstrap.min.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/animate.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/owl.carousel.min.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/owl.theme.default.min.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/materialize.min.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/skitter.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/aos.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/ion.range-slider.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/style.css' %}" />
+      <link rel="stylesheet" type="text/css" href="{% static 'frontend/assets/themes/gameshop/css/materialize.css' %}" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+      
+      
+      
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-lg fixed-top">
+         <div class="header">
+            <div class="container-md">
+               <div class="row align-items-center">
+                  <div class="col-lg-5 col-6 order-1">
+                     <div class="logo">
+                        <a class="navbar-brand" href="/">
+                        <img src="{{organization_info.logo.url}}" alt="...">
+                        </a>
+                     </div>
+                  </div>
+                  <div class="col-md-12 col-lg-5 order-3 order-lg-2">
+                     <div class="nav-item search-form">
+                        <form action="" method="get">
+                           <div class="input-group">
+                              <input type="search" name="search" value="" class="form-control" placeholder="Search items" aria-describedby="basic-addon">
+                              <span class="input-group-text" id="basic-addon">
+                              <button type="submit">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search text-white" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                  </svg>
+                              </button>
+                              </span>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+
+
+                  <div class="col-6 col-lg-2 order-2 order-lg-3">
+                     <div class="user-account">
+                         {% if request.user.is_authenticated %}
+                         <span class="navbar-text">
+                             <div id="pushNotificationArea" class="notification-panel">
+                                 <button class="notification-icon">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell text-white" viewBox="0 0 16 16">
+                                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6"/>
+                                     </svg>
+                                 </button>
+                                 <div class="notifications">
+                                     <a href="" class="clear-notification">You have no notifications</a>
+                                 </div>
+                             </div>
+                             <div class="user-panel">
+                                 <button class="user-icon">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle text-white" viewBox="0 0 16 16">
+                                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                                     </svg>
+                                 </button>
+                                 <div class="user-drop-dropdown">
+                                     <ul>
+                                         <li>
+                                             <a href="{% url 'frontend:dashboard' %}" class="active">
+                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 feather feather-home">
+                                                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                                 </svg>
+                                                 Dashboard
+                                             </a>
+                                         </li>
+                                         <li>
+                                             <a href="">
+                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 feather feather-shopping-bag">
+                                                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                                     <line x1="3" y1="6" x2="21" y2="6"></line>
+                                                     <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                                 </svg>
+                                                 My Orders
+                                             </a>
+                                         </li>
+                                         <li>
+                                             <a href="">
+                                                 <i class="me-2 fas fa-history feather feather-shopping-bag" aria-hidden="true"></i>
+                                                 History
+                                             </a>
+                                         </li>
+                                         <li>
+                                             <a href="{% url 'user_account:profile' %}">
+                                                 <i class="me-2 fas fa-edit" aria-hidden="true"></i>
+                                                 My Profile
+                                             </a>
+                                         </li>
+                                         <li>
+                                             <a href="{% url 'user_account:logout' %}">
+                                                 <i class="me-2 fas fa-sign-out-alt" aria-hidden="true"></i>
+                                                 Sign out
+                                             </a>
+                                             <form id="logout-form" action="" method="POST" class="d-none">
+                                                 <input type="hidden" name="" value="">
+                                             </form>
+                                         </li>
+                                     </ul>
+                                 </div>
+                             </div>
+                         </span>
+                         {% else %}
+                         <a href="{% url 'user_account:login' %}" class="btn btn-outline-success text-white">
+                             Login
+                         </a>
+                         <!-- <a href="{% url 'user_account:register' %}" class="btn btn-outline-primary text-white">
+                             Signup
+                         </a> -->
+                         {% endif %}
+                     </div>
+                 </div>
+
+
+               
+               </div>
+            </div>
+         </div>
+      </nav>
+
+      {% block content %}
+      
+      {% endblock %}
+      <footer class="footer-section">
+        <div class="container">
+           <div class="row">
+              <div class="col-md-6 col-lg-3">
+              </div>
+              <div class="col-md-6 col-lg-3 ps-lg-5">
+              </div>
+              <div class="col-md-6 col-lg-3 ps-lg-5">
+              </div>
+           </div>
+           <div class="footer-bottom">
+              <div class="row">
+                 <div class="col-md-6" style="width: 100%">
+                    <p class="copyright">
+
+
+                       <a href="{% url 'frontend:term_and_condition' %}">Terms</a> |
+                       <a href="{% url 'frontend:privacy_policy' %}">Privacy Policy</a> |
+                       <a href="{% url 'frontend:about_page' %}">About Us</a> |
+                       <a href="{% url 'frontend:contact_page' %}">Contact Us</a> |
+                       {% comment %} <a href="{% url 'dashboard:helpCenter' %}">Help Center</a> {% endcomment %}
+                       <br>
+                       Copyright © 2023 <a href="/">{{organization_info.site_title}}</a>
+                       All Rights Reserved <br>All product names are trademarks of their respective companies. 
+                    </p>
+                 </div>
+                 <div class="col-md-6 language"></div>
+              </div>
+           </div>
+        </div>
+     </footer>
+     <a href="#" class="scroll-top">
+     <i class="fas fa-arrow-up"></i>
+     </a>
+     <script src="{% static 'frontend/assets/themes/gameshop/js/bootstrap.bundle.min.js' %}"></script>
+     <script src="{% static 'frontend/assets/themes/gameshop/js/jquery-3.6.0.min.js' %}"></script>
+     <script src="{% static 'frontend/assets/themes/gameshop/js/fontawesome.min.js' %}"></script>
+     <script src="{% static 'frontend/assets/themes/gameshop/js/owl.carousel.min.js' %}"></script>
+     <script src="{% static 'frontend/assets/themes/gameshop/js/jquery.waypoints.min.js' %}"></script>
+     
+     <div id="fb-root"></div>
+     <script>
+        "use strict";
+        $(document).ready(function () {
+            var fb_app_id = "1000735397180637";
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: fb_app_id,
+                    autoLogAppEvents: true,
+                    xfbml: true,
+                    version: 'v10.0'
+                });
+            };
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = '../connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        });
+     </script>
+     <script async defer crossorigin="anonymous" src="../connect.facebook.net/en_US/sdk.js"></script>
+     <div class="fb-customerchat" page_id="140417555826347"></div>
+     <script>
+        "use strict";
+        var root = document.querySelector(':root');
+        root.style.setProperty('--base', '#feb002');
+        root.style.setProperty('--base-secondary', '#fd7603');
+        root.style.setProperty('--base-rgba', 'rgba(254,176,2,0.6)');
+     </script>
+
+     <!--3D -->
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js"></script>
+   <script type="text/javascript" src="{% static 'frontend/3D/jR3DCarousel.js' %}"></script>
+   
+<script type="text/javascript">
+   $(document).ready(function(){
+      var slideImages = [ {src: '../jRCarousel/images/01.jpg'},
+                          {src: '../jRCarousel/images/02.jpg'},
+                          {src: '../jRCarousel/images/03.jpg'},
+                          {src: '../jRCarousel/images/04.jpg'},
+                          {src: '../jRCarousel/images/05.jpg'} ]
+      //var jR3DCarousel;
+      
+      jR3DCarousel = $('.jR3DCarouselGallery').jR3DCarousel({
+         width: 470, 		/* largest allowed width */
+         height: 272, 		/* largest allowed height */
+         slides: slideImages /* array of images source */
+      });
+      
+      var carouselCustomeTemplateProps =  {
+               width: 470, 				/* largest allowed width */
+              height: 272, 				/* largest allowed height */
+              slideLayout : 'fill',     /* "contain" (fit according to aspect ratio), "fill" (stretches object to fill) and "cover" (overflows box but maintains ratio) */
+              animation: 'slide3D', 	/* slide | scroll | fade | zoomInSlide | zoomInScroll */
+              animationCurve: 'ease',
+              animationDuration: 1900,
+              animationInterval: 2000,
+              slideClass: 'jR3DCarouselCustomSlide',
+              autoplay: false,
+              controls: true,			/* control buttons */
+              navigation: ''			/* circles | squares | '' */,
+              perspective: 2200,
+              rotationDirection: 'ltr',
+              onSlideShow: slideShownCallback
+                 
+         }
+      function slideShownCallback($slide){
+         console.log("Slide shown: ", $slide.find('img').attr('src'))
+      }
+   
+      jR3DCarouselCustomeTemplate = $('.jR3DCarouselGalleryCustomeTemplate').jR3DCarousel(carouselCustomeTemplateProps);
+   
+     })
+   </script>
+
+   
+
+   
+
+<script src="{% static 'frontend/assets/js/Carousel.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.container').carousel({
+        num: 5,
+        maxWidth: 450,
+        maxHeight: 300,
+        distance: 50,
+        scale: 0.6,
+        animationTime: 1000,
+        showTime: 4000
+    });
+    $('#container2').carousel({
+        num: 5,
+        maxWidth: 200,
+        maxHeight: 100,
+        showTime: 5000
+    });
+
+    $('#container3').carousel({
+        num: 5,
+        maxWidth: 300,
+        maxHeight: 250,
+        distance: 30,
+        autoPlay: false
+    });
+});
+</script>
+
+
+
+  </body>
+</html>

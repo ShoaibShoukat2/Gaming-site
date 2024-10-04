@@ -1,0 +1,40 @@
+
+{% extends 'dashboard/base_index/base.html' %}
+{% load static %}
+{% block title %} 
+Dashboard
+{% endblock %}
+
+{% block body %}
+<link href="{% static 'dashboard/build/css/bootstrap.min.css'%}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/icons.min.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/app.min.css'%}" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+        <div class="page-content">
+            <!-- Start content -->
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">                                    
+                            
+                            <h4 class="page-title">Dashboard</h4>
+                        </div>
+                    </div>
+                </div>
+                <center>
+                    <div class="row">
+                        <div style="margin-top: 200px; font-family: arial;"><h1>WELCOME TO DASHBOARD</h1></div>
+                    </div>
+                </center>
+            </div> <!-- content -->
+</div>
+{% endblock%}
+
+
+
+
+

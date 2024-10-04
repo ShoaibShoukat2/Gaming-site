@@ -1,0 +1,123 @@
+{% extends 'dashboard/base_index/base.html' %}
+{% load static %}
+{% block title %}
+Order Detail
+{% endblock %}
+{% block body %}
+<link href="{% static 'dashboard/build/css/bootstrap.min.css'%}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/icons.min.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/app.min.css'%}" id="app-style" rel="stylesheet" type="text/css" />
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <a href="{% url  'dashboard:Order' %}" class="btn btn-primary">Back to Order list </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            <blockquote> Order Detail</blockquote>
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% if messages %}
+                                    {% for msg in messages %}
+                                        <div class="alert alert-{{ msg.tags }} alert-dismissible text-bg-{{ msg.tags }} border-0 fade show" role="alert">
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            <strong>{% if msg.tags == 'success' %}Success{% elif msg.tags == 'warning' %}Warning{% endif %} - </strong>{{ msg.message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <h3>Customer Detail</h3>
+                                        <p>Name: {{ order.user.name }}</p>
+                                        <p>Email: {{ order.user.email }}</p>
+                                        <p>Contact: {{ order.user.phone_no }}</p>
+                                    </div>
+                                    
+                                    <div class="col-lg-4">
+                                        <h3>Order Details</h3>
+                                        <p>Payment Method: {{ order.payment_method }}</p>
+                                        <p>Order Status: {{ order.order_status }}</p>
+                                        <p>Total Price: Rs.{{ order.totalPrice }}</p>
+                                        <p>Created: {{ order.created }}</p>
+                                        <p>Updated: {{ order.updated }}</p>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <h3>Product Selected</h3>
+                                        <p>Category: {{ order.product.category }}</p>
+                                        <p>Product name: {{ order.product.product_name }}</p>
+                                        <p>Description: {{ order.product.short_descriptions|safe}}</p>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-12 ">
+                                    <h5 class="mt-5">Ordered Items</h5>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center; background-color: #ced4da; white-space: nowrap;">S.N</th>
+                                                <th style="text-align: center; background-color: #ced4da; white-space: nowrap;">Item name</th>
+                                                {% comment %} <th style="text-align: center; background-color: #ced4da; white-space: nowrap;">Item icon</th> {% endcomment %}
+                                                <th style="text-align: center; background-color: #ced4da; white-space: nowrap;">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in product_items %}
+                                            <tr>
+                                                <td style="text-align: center;">{{ forloop.counter }}</td>
+                                                <td style="text-align: center;">{{ item.item_name }}</td>
+                                                {% comment %} <td style="text-align: center;">
+                                                    {% if item.item_icon %}
+                                                        <img src="{{ item.item_icon.url }}" alt="Item Icon">
+                                                    {% else %}
+                                                        No Image
+                                                    {% endif %}
+                                                </td> {% endcomment %}
+                                                <td style="text-align: center;">{{ item.item_price }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        
+                                    </table>
+                                    <h7 style="float:right;">Total Price: Rs.{{ order.totalPrice }}</h7>
+                                </div>
+                                
+                                {% comment %} <div class="row mt-4">
+                                    <div class="col-lg-12">
+                                        <h3>Update Order Status</h3>
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                                            <div class="form-group">
+                                                <label for="order_status">Order Status</label>
+                                                <select onchange="this.form.submit()" name="order_status" class="rounded form-control">
+                                                    <option value="">Select Order Status</option>
+                                                    {% for status in order.ORDER_STATUS_CHOICES %}
+                                                        <option value="{{ status.0 }}" {% if status.0 == order.order_status %} selected {% endif %}>{{ status.1 }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div> {% endcomment %}
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div> <!-- content -->
+    </div>
+</div>
+{% endblock %}

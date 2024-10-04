@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-size: 16px;
+            line-height: 24px;
+        }
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <h1>Invoice</h1>
+        <p>Dear {{ customer_name }},</p>
+        <p>Your payment was successful. Please find the details below:</p>
+        <ul>
+            <li>Order ID: {{ order_id }}</li>
+            <li>Amount: {{ amount }}</li>
+            <li>Transaction ID: {{ transaction_id }}</li>
+            <li>Payment Date: {{ payment_date }}</li>
+        </ul>
+        <p>Thank you for your purchase!</p>
+    </div>
+</body>
+</html>
+
+
+
+

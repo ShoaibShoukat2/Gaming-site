@@ -1,0 +1,154 @@
+{% extends 'dashboard//base_index/base.html' %}
+{% load static %}
+{% block title %}
+Slider
+{% endblock %}
+{% block body %}
+<link href="{% static 'dashboard/build/css/bootstrap.min.css'%}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/icons.min.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/app.min.css'%}" id="app-style" rel="stylesheet" type="text/css" />
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="main-content">
+    <div class="page-content">
+        <!-- Start content -->
+        <div class="container-fluid">
+            <!-- start page title -->
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="page-title-box d-flex align-items-center  justify-content-between">
+                        <h4 class="mb-0 font-size-18">Slider Image List</h4>
+                        <div class="page-title-right">
+                            <a href="{% url  'dashboard:banner_create' %}" class="btn btn-primary">Add new Slider Image</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <!-- end page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            {% if messages %}
+                                {% for msg in messages %}
+                                <div class="alert alert-{{ msg.tags }} alert-dismissible text-bg-{{ msg.tags }} border-0 fade show"
+                                    role="alert">
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                    <strong>{% if msg.tags == 'success' %}Success{% elif msg.tags == 'warning' %}Warning{% endif %} -
+                                    </strong>{{ msg.message }}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="table-responsive">
+                                <table id="CustomersList" class="table table-bordered dt-responsive nowrap "
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                   <thead class="bg-light">
+                                    <tr>
+                                        <th style="text-align: center; background-color: #ced4da; white-space: nowrap;">S.N</th>
+                                        <th style="text-align: center; background-color: #ced4da; white-space: nowrap;">Image</th>
+                                        <th style="text-align: center; background-color: #ced4da; white-space: nowrap;">Action</th>
+                                    </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for item in sliders %}
+                                                <tr>
+                                                <td style="text-align: center;">
+                                            
+                                                {{forloop.counter}}
+                                            </td>
+                                            <td style="text-align: center;"><img src="{{item.banner_image.url}}" class="img-fluid" style="height: 200px; width: 200px; object-fit: cover;"></td>
+                                            <td style="text-align: center;">
+                                                <a href="{% url 'dashboard:bannar_update' item.id %}" class="font-18 text-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi bi-pencil-square me-3"></i></a>
+                                                <a  data-bs-target="#exampleModal{{item.id}}" class="delete btn" data-bs-toggle="modal"><i class="bi bi-trash me-3" data-toggle="tooltip" title="Delete"></i></a>
+                                            </td>
+                                        </tr>
+
+                                                                            
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal{{item.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Delete?</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to delete this #{{ item.firstname }}
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <form method="post" action="{% url 'dashboard:delete_bannar' %}">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="bannar_id" value="{{item.id}}">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        {%endfor%}
+                                
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                        
+                    <div class="border-top d-md-flex justify-content-between align-items-center p-6">
+                        <span>Showing {{ sliders.start_index }} to {{ sliders.end_index }} of {{ sliders.paginator.count }} entries</span>
+                        <nav class="mt-2 mt-md-0">
+                            <ul class="pagination mb-0">
+                                {% if sliders.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ sliders.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Previous</span>
+                                    </li>
+                                {% endif %}
+                    
+                                {% for num in sliders.paginator.page_range %}
+                                    {% if num == sliders.number %}
+                                        <li class="page-item active">
+                                            <span class="page-link">{{ num }}</span>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                    
+                                {% if sliders.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ sliders.next_page_number }}">Next</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">Next</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                    
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div> <!-- content -->
+    </div>
+
+
+
+    {%endblock%}

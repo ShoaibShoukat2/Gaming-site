@@ -1,0 +1,237 @@
+{% extends 'frontend/base.html'%}
+{% load static %} 
+{% block title %}
+Profile
+{% endblock %}
+{% block content %}
+
+
+<div class="dashboard-section padding-top padding-bottom overflow-hidden login-section">
+    <div class="container">
+    <div class="row gy-5">
+        <div class="col-lg-4 shadow-none p-3 mb-5 bg-dashboard rounded">
+            <div class="dashboard-user">
+                <div class="user-content">
+                    <form method="post" action="{% url 'user_account:update_avatar' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="image-input">
+                                <label for="image-upload" id="image-label"><i class="fas fa-upload"></i></label>
+                                <input type="file" name="avatar" placeholder="Choose image" id="image">
+                                
+                                <img id="image_preview_container" class="preview-image w-100" src="{{avatar_url}}" alt="preview image">
+                            </div>
+                        </div>  
+
+
+
+                        <p>Joined At 06 Jun, 2024 5:26 PM</p>
+                        <div class="submit-btn-wrapper text-center text-md-left">
+                            <button type="submit" class="game-btn"><i class="fa fa-cloud-upload-alt"></i>
+                            <span>Image Update</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="custom-card card-lg bg-gradient">
+                <div class="card-body bg-dashboard profile">
+                <ul class="nav nav-tabs d-flex flex-wrap" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link  active" data-bs-toggle="tab" href="#home">Profile Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-bs-toggle="tab" href="#menu1">Password Setting</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-bs-toggle="tab" href="#identity">Identity Verifiaction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-bs-toggle="tab" href="#addressVerification">Address Verification</a>
+                    </li>
+                </ul>
+                <div class="tab-content ">
+                    <div id="home" class="container mt-4 tab-pane   active">
+                        <div class="contact-box">
+                            <form action="{% url 'user_account:update_user_profile' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                        <!-- Display and update fields -->
+                                <div class="form-group">
+                                    <label for="id_name">First Name</label>
+                                    <input class="form-control" type="text" name="name" id="id_name" value="{{ form.name.value|default:'' }}">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="id_email">Email Address</label>
+                                    <input class="form-control" type="email" name="email" id="id_email" value="{{ form.email.value|default:'' }}" readonly>
+                                </div>
+
+                        
+                                <div class="form-group">
+                                    <label for="id_phone_no">Phone Number</label>
+                                    <input class="form-control" type="text" name="phone_no" id="id_phone_no" value="{{ form.phone_no.value|default:'' }}">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="id_address">Address</label>
+                                    <textarea class="form-control" name="address" id="id_address" rows="5">{{ form.address.value|default:'' }}</textarea>
+                                </div>
+                                
+
+                                
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div id="menu1" class="container mt-4 tab-pane ">
+                        <div class="contact-box">
+                            <form method="post" action="{% url 'user_account:update_password' %}">
+                                {% csrf_token %}
+                                <div class="mb-4">
+                                    <label class="form-label">Current Password</label>
+                                    <input type="password" name="current_password" class="form-control">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" name="new_password1" class="form-control">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Confirm New Password</label>
+                                    <input type="password" name="new_password2" class="form-control">
+                                </div>
+                                <div class="submit-btn-wrapper text-center">
+                                    <button type="submit" class="game-btn w-100">
+                                        <span>Update Password</span>
+                                    </button>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="tab-pane show fade " id="identity">
+                        <form method="post" action="https://bakuzone.com/user/verificationSubmit" class="profile-edit-form contact-box row " enctype="multipart/form-data">
+                            <input type="hidden" name="_token" value="twp9xDzMjo0mkoqv9S02FWWvKiB67blaWhEyFRjn"> 
+                            <div class="form-group">
+                            <label class="form-label" for="identity_type">Identity Type</label>
+                            <select name="identity_type" id="identity_type" class="form-control form-select style-two">
+                                <option value selected disabled>Select Type</option>
+                            </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane  fade " id="addressVerification">
+                        <form method="post" action="https://bakuzone.com/user/addressVerification" class="profile-edit-form contact-box row" enctype="multipart/form-data">
+                            <input type="hidden" name="_token" value="twp9xDzMjo0mkoqv9S02FWWvKiB67blaWhEyFRjn"> 
+                            <div class="form-group">
+                            <label class="form-label">Address Proof <span class="text-danger">*</span> </label>
+                            <br>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail withdraw-thumbnail fileinput-preview wh-200-150" data-trigger="fileinput">
+                                    <img class="w-100 " src="https://bakuzone.com/assets/admin/images/default.png" alt="...">
+                                </div>
+                                <div class="img-input-div">
+                                    <span class="btn btn-success btn-file">
+                                    <span class="fileinput-new "> Select Image </span>
+                                    <span class="fileinput-exists"> Change</span>
+                                    <input type="file" name="addressProof" value accept="image/*">
+                                    </span>
+                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"> Remove</a>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="form-group">
+                            <button type="submit" class="game-btn w-100">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script>
+        function togglePasswordVisibility(inputId) {
+            var input = document.getElementById(inputId);
+            var eyeIcon = document.getElementById('eye_icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
+
+
+<!-- SweetAlert inclusion -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Handle Django messages with SweetAlert -->
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            Swal.fire({
+                icon: '{% if message.tags == "success" %}success{% elif message.tags == "error" %}error{% else %}info{% endif %}',
+                title: '{{ message }}',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        {% endfor %}
+    {% endif %}
+</script>
+{% endblock %}
+     
+
+
+
+
+
+
+

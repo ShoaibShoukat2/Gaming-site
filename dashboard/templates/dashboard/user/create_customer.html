@@ -1,0 +1,109 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}
+Change User
+{% endblock %}
+{% block body %}
+<link href="{% static 'dashboard/build/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <a href="{% url  'dashboard:customer' %}" class="btn btn-primary">Back to User list </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <blockquote> {% if form.initial %} Update {% else %}Add New {% endif %} User </blockquote>
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% if messages %}
+                                {% for msg in messages %}
+                                <div class="alert alert-{{ msg.tags }} alert-dismissible text-bg-{{ msg.tags }} border-0 fade show"
+                                    role="alert">
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                    <strong>{% if msg.tags == 'success' %}Success{% elif msg.tags == 'warning' %}Warning{% endif %} -
+                                    </strong>{{ msg.message }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+
+                                <div class="row">
+                                    <!-- input -->
+                                    <div class="col-xl-6">
+                                    <div class="mb-3">
+                                       <label class="form-label">Email</label>
+                                       <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" class="form-control"
+                                       value="{% if instance %}{{ instance.email }}{% endif %}" placeholder="Enter email" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" class="form-control"
+                                        value="{% if instance %}{{ instance.name }}{% endif %}" placeholder="Enter name" required>
+                                     </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone number</label>
+                                        <input type="number" name="{{ form.phone_no.name }}" id="{{ form.phone_no.id_for_label }}" class="form-control"
+                                        value="{% if instance %}{{ instance.phone_no }}{% endif %}" placeholder="Enter phone number" required>
+                                    </div>
+
+                                    
+                                </div>
+
+                                <div class="col-xl-6">
+                                    <div class="mb-3">
+                                        <label for="{{ form.avatar.id_for_label }}" class="form-label">Avatar :</label>
+                                        <input type="file" name="{{ form.avatar.name }}" id="{{ form.avatar.id_for_label }}" class="form-control" {% if not instance %}required{% endif %} onchange="showPreview(this);">
+                                        <div id="avatarContainer" style="width:auto; height:auto;">
+                                            <img class="img-fluid" id="avatarPreview" src="{% if instance %}{{ instance.avatar.url }}{% endif %}" alt="" >
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" name="{{ form.is_admin.name }}" id="{{ form.is_admin.id_for_label }}"
+                                        {% if instance and instance.is_admin %}checked{% endif %}>
+                                        <label class="form-check-label" for="{{ form.is_admin.id_for_label }}">Is Admin</label>
+                                    </div>
+
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" name="{{ form.is_dealer.name }}" id="{{ form.is_dealer.id_for_label }}"
+                                        {% if instance and instance.is_dealer %}checked{% endif %}>
+                                        <label class="form-check-label" for="{{ form.is_dealer.id_for_label }}">Is Dealer</label>
+                                    </div>
+
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" name="{{ form.is_user.name }}" id="{{ form.is_user.id_for_label }}"
+                                        {% if instance and instance.is_user %}checked{% endif %}>
+                                        <label class="form-check-label" for="{{ form.is_user.id_for_label }}">Is User</label>
+                                    </div>
+
+                                
+                                </div>
+                                    <div class="col-lg-12">
+                                       {% if instance %}
+                                       <button type="submit" class="btn btn-primary">Update</button>
+                                   {% else %}
+                                       <button type="submit" class="btn btn-primary">Add</button>
+                                   {% endif %}
+                                  </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

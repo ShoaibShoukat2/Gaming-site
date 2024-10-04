@@ -1,0 +1,47 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}
+404 Error 
+{% endblock %}
+{% block content %}
+<style>
+    .full-height {
+      height: 80vh;
+    }
+    .flex-center {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+    .position-ref {
+      position: relative;
+    }
+    .code {
+      font-size: 26px;
+      padding: 2rem;
+      border-right: 2px solid;
+      margin-right: 2rem;
+    }
+    .message {
+      font-size: 18px;
+      padding: 1rem;
+    }
+  </style>
+
+
+ <div class="container-fluid full-height flex-center position-ref">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="code">
+          404
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="message" style="padding: 5px;">
+          Sorry, the page you are looking for could not be found.
+        </div>
+        <a href="/" class="btn btn-primary">Go Home</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

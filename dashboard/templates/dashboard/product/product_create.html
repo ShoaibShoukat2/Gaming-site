@@ -1,0 +1,352 @@
+{% extends 'dashboard/base_index/base.html' %}
+{% load static %}
+{% block title %}
+{% if form.initial %}
+Update Product
+{% else %}
+Add Product
+{% endif %}
+{% endblock %}
+{% block body %}
+
+<style>
+        #field_list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        #id_productName,#id_description , #id_fieldName, #id_category{
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #CED4DA;
+        border-radius: 4px;
+        box-sizing: border-box;
+        }
+    [id^="id_productfields-"]:not([id$="-DELETE"]) {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #CED4DA;
+        border-radius: 4px;
+        box-sizing: border-box;
+        }
+
+    
+    [id^="id_productfields-"]:not([id$="-DELETE"]) {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #CED4DA;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    [id^="id_products-"]:not([id$="-DELETE"]) {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #CED4DA;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    input[type="checkbox"][name^="products-"] {
+        width: auto; /* Keep checkbox its default size */
+        height: auto; /* Ensure the checkbox retains its default height */
+        padding: 8px; /* Add padding around the checkbox */
+        border: 1px solid #CED4DA; /* Add a border similar to other inputs */
+        border-radius: 4px; /* Add border radius to make it look rounded */
+        box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+        margin-right: 8px; /* Add space to the right for better spacing */
+        cursor: pointer; /* Change the cursor to pointer to indicate it's clickable */
+    }
+    
+    
+</style>
+<link href="{% static 'dashboard/build/css/bootstrap.min.css'%}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/icons.min.css'%}" rel="stylesheet" type="text/css" />
+<link href="{% static 'dashboard/build/css/app.min.css'%}" id="app-style" rel="stylesheet" type="text/css" />
+
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="main-content">
+    <div class="page-content">
+        <!-- Start content -->
+        <div class="container-fluid">
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <a href="{% url  'dashboard:product' %}" class="btn btn-primary">Back to Product list </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <blockquote> {% if product_form.initial %} Update {% else %}Add New {% endif %} Product </blockquote>
+                            <form  method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{product_form.media}}
+                                {% if messages %}
+                                {% for msg in messages %}
+                                <div class="alert alert-{{ msg.tags }} alert-dismissible text-bg-{{ msg.tags }} border-0 fade show"
+                                    role="alert">
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                    <strong>{% if msg.tags == 'success' %}Success{% elif msg.tags == 'warning' %}Warning{% endif %} -
+                                    </strong>{{ msg.message }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+
+                                {% comment %} <div class="row">
+
+                                    {% for field in form %}
+                                    <div class="col-xl-6">
+
+                                        {{field.label}}
+                                        <div class="mb-3">
+                                            {{field}}
+                                        </div>
+                                
+                                    </div>
+                                    {% endfor %}
+
+                                </div>  {% endcomment %}
+
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="mb-3">
+                                        <label class="form-label">Category</label>
+                                        {{product_form.category}}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Short description</label>
+                                            {{product_form.short_descriptions}}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="{{ product_form.product_image.id_for_label }}" class="form-label">Product Image :</label>
+                                            <input type="file" name="{{ product_form.product_image.name }}" id="{{ product_form.product_image.id_for_label }}" class="form-control" {% if not instance %}required{% endif %} onchange="showPreview(this);">
+                                            <div id="product_imageContainer" style="width:auto; height:auto;">
+                                                {% if instance and instance.product_image %}
+                                                    <img class="img-fluid" id="product_imagePreview" src="{{ instance.product_image.url }}" alt="">
+                                                {% else %}
+                                                    <img class="img-fluid" id="product_imagePreview" src="" alt="">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Product Name</label>
+                                            <input type="text" name="{{ product_form.product_name.name }}" id="{{ product_form.product_name.id_for_label }}" class="form-control"
+                                            value="{% if instance %}{{ instance.product_name }}{% endif %}" placeholder="Enter product name" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Description</label>
+                                            {{product_form.descriptions}}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Is Trending</label>
+                                            {{ product_form.is_trending }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-12">
+                                        <h3>Product Item Fields:</h3>
+                                        <div id="field_list">
+                                            {{ formset.management_form }}
+                                            {% for form in formset %}
+                                                {{ form.as_p }}
+                                            {% endfor %}
+                                        </div>
+                                        <button type="button" id="add_productItem" class="btn btn-secondary" style="margin-top: 20px; margin-bottom: 20px;">Add Product Item Field</button>
+                                    </div>
+
+                                    <div>
+                                </div>
+                                <!-- end row-->
+                                <div class="col-auto">
+                                    {% if form.initial %}
+                                        <button type="submit" class="btn btn-success chat-send waves-effect waves-light">Update Product</button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-primary chat-send waves-effect waves-light">Add Product </button>
+                                    {% endif %}
+                                    {% comment %} <a href="{% url  'dashboard:product_Product' %}" class="btn btn-danger">Back to Product </a> {% endcomment %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+        </div> <!-- content -->
+    </div>
+    <style>
+        select {
+            word-wrap: normal;
+            width: 567px;
+            height: 40px;
+            display: flex;
+            border: 1px solid #ccc;
+        }
+    </style>
+        <style>
+            #imageContainer {
+                max-width: 100%;
+                max-height: 80%;
+                border: 1px solid #ccc;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+
+            #imagePreview {
+                max-width: 100%;
+                max-height: 100%;
+            }
+    </style>
+        <script>
+            function showPreview(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('imagePreview').src = e.target.result;
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            function showPreview1(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('imagePreview1').src = e.target.result;
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+        <script>
+            function validatePassword1() {
+                const password1 = document.getElementById('{{ user_form.password1.id_for_label }}').value;
+                const password2 = document.getElementById('{{ user_form.password2.id_for_label }}').value;
+        
+                // Check if passwords match
+                if (password1 !== password2) {
+                    document.getElementById('password-message1').innerText = 'Passwords do not match.';
+                    return;
+                }
+        
+                // Check if password contains both numbers and alphabetic characters until it reaches 8 characters
+                if (password1.length < 8 || (!/\d/.test(password1) || !/[a-zA-Z]/.test(password1))) {
+                    document.getElementById('password-message1').innerText = 'Password should contain both numbers and alphabetic characters and be at least 8 characters long.';
+                    return;
+                }
+        
+                // Check for similarity with other personal information
+                const personalInfo = ['username', 'email', 'name']; // Example personal information
+                for (const info of personalInfo) {
+                    if (password1.toLowerCase().includes(info.toLowerCase())) {
+                        document.getElementById('password-message1').innerText = 'Password can\'t be too similar to your other personal information.';
+                        return;
+                    }
+                }
+        
+                // Check for common passwords
+                const commonPasswords = ['password', '123456', 'qwerty']; // Example common passwords
+                if (commonPasswords.includes(password1.toLowerCase())) {
+                    document.getElementById('password-message1').innerText = 'Password can\'t be a commonly used password.';
+                    return;
+                }
+        
+                // Check if password is entirely numeric
+                if (/^\d+$/.test(password1)) {
+                    document.getElementById('password-message1').innerText = 'Password can\'t be entirely numeric.';
+                    return;
+                }
+        
+                document.getElementById('password-message1').innerText = '';
+            }
+        
+            
+            function togglePasswordVisibility(inputId) {
+                const input = document.getElementById(inputId);
+                const eyeIcon = document.getElementById('eye-icon-' + inputId.split('-').pop());
+        
+                if (input.type === "password") {
+                    input.type = "text";
+                    eyeIcon.classList.remove('bi-eye');
+                    eyeIcon.classList.add('bi-eye-slash');
+                } else {
+                    input.type = "password";
+                    eyeIcon.classList.remove('bi-eye-slash');
+                    eyeIcon.classList.add('bi-eye');
+                }
+            }
+        </script>
+        <script>
+            function validatePassword(input) {
+                const password = input.value;
+                const email = document.getElementById('{{ user_form.email.id_for_label }}').value;
+        
+                // Check if password contains both numbers and alphabetic characters
+                if (!/\d/.test(password) || !/[a-zA-Z]/.test(password) || password.length < 8) {
+                    document.getElementById('password-message').innerText = 'Password should contain both numbers and alphabetic characters, and be at least 8 characters long.';
+                    return;
+                }
+        
+                // Check for similarity with other personal information
+                const personalInfo = ['username', 'email', 'name']; // Example personal information
+                for (const info of personalInfo) {
+                    if (password.toLowerCase().includes(info.toLowerCase())) {
+                        document.getElementById('password-message').innerText = 'Password can\'t be too similar to your other personal information.';
+                        return;
+                    }
+                }
+        
+                // Check for common passwords
+                const commonPasswords = ['password', '123456', 'qwerty']; // Example common passwords
+                if (commonPasswords.includes(password.toLowerCase())) {
+                    document.getElementById('password-message').innerText = 'Password can\'t be a commonly used password.';
+                    return;
+                }
+        
+                // Check if password is similar to email
+                if (password.toLowerCase().includes(email.split('@')[0].toLowerCase()) || password.toLowerCase().includes(email.split('@')[1].toLowerCase())) {
+                    document.getElementById('password-message').innerText = 'Password can\'t be too similar to your email.';
+                    return;
+                }
+        
+                document.getElementById('password-message').innerText = '';
+            }
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('add_productItem').addEventListener('click', function() {
+                    var formsetPrefix = '{{ formset.prefix }}';
+                    var totalForms = parseInt(document.getElementById('id_' + formsetPrefix + '-TOTAL_FORMS').value);
+                    var newFieldIndex = totalForms;  // Index of the new field form
+                    var fieldList = document.getElementById('field_list');
+                    var newFieldForm = document.createElement('div');
+                    newFieldForm.className = 'form-row mb-3'; // Add class for styling
+                    // Replace '__prefix__' in the formset HTML with the new index
+                    var newFormsetHtml = '{{ formset.empty_form|escapejs }}'.replace(/__prefix__/g, newFieldIndex);
+                    newFieldForm.innerHTML = newFormsetHtml;
+                    fieldList.appendChild(newFieldForm);
+                    // Update the TOTAL_FORMS count
+                    document.getElementById('id_' + formsetPrefix + '-TOTAL_FORMS').value = totalForms + 1;
+                });
+            });
+    </script>
+    
+    {%endblock%}

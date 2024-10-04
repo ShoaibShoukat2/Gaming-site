@@ -1,0 +1,174 @@
+{% extends 'frontend/base.html' %}
+{% load static %} 
+{% block title %}
+Dashboard 
+{% endblock %}
+{% block content %}
+<div class="dashboard-section">
+    <div class="container">
+       <section class="user-dashboard-section section-b-space">
+          <div class="row">
+             <div class="col-xxl-3 col-lg-4">
+                <div class="dashboard-left-sidebar bg-dashboard mb-5">
+                    <ul class="nav nav-pills user-nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                        <a class="nav-link active " href="{% url 'frontend:dashboard' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            Dashboard 
+                        </a>
+
+                    
+                        </li>
+                        <li class="nav-item" role="presentation">
+                        <a class="nav-link    
+                            " href="{% url 'frontend:order' %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                            My Orders 
+                        </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                        <a href="{% url 'frontend:history' %}" class="nav-link   ">
+                        <i class="fas fa-history feather feather-shopping-bag" aria-hidden="true"></i>
+                        History </a>
+                        </li>
+                    </ul>
+                </div>
+             </div>
+             <div class="col-xxl-9 col-lg-8">
+                <div class="dashboard-right-sidebar bg-dashboard mb-4" style="height: auto">
+                   <div class="tab-content" id="pills-tabContent">
+                      <div class="dashboard-home">
+                         <div class="dashboard-header">
+                            <div class="row align-items-center">
+                               <div class="col-2 col-md-3">
+                                  <div class="box-logo">
+                                     <img width="50px" height="50px" src="https://img.freepik.com/premium-vector/video-gamer-design-with-headphone-esports-mascot-gaming-logo-template-illustration_196854-714.jpg" alt="">
+                                  </div>
+                               </div>
+                               <div class="col-6">
+                                  <div class="box-name">
+
+                                   <h4>
+                                       {% if user.is_authenticated %}
+                                          {{ user.name }}
+                                       {% else %}
+                                          Guest
+                                       {% endif %}
+                                       <a href="" class="text-white"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                    </h4>
+                                    
+                                     <a href="https://bakuzone.com/user/twostep-security" class="text-white">
+                                        <p>Two Factor Authenticator</p>
+                                     </a>
+                                  </div>
+                               </div>
+                               <div class="col-4 col-md-3">
+                                  <div class="box-logout">
+                                     <a class="text-white" href="/" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                     Sign out </a>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+                <div class="dashboard-right-sidebar bg-dashboard">
+                   <div class="dashboard-home">
+                      <div class="title">
+                         <h2>Dashboard</h2>
+                      </div>
+                      <div class="row align-items-center">
+                         <div class="col-12">
+                            <div class="row dashboard__card align-items-center gx-0">
+                               <div class="col-2 text-end">
+                                  <div class="dashboard__card-icon-1">
+                                     <img src="https://bakuzone.com/assets/themes/gameshop/images/icon2/bakucoin80.png" alt="..." style="width: 45px;">
+                                  </div>
+                               </div>
+                               <div class="col-5 col-md-6 text-start ps-2">
+                                  <p class="info m-0 text-white">Balance:</p>
+                                  <h2 class="price m-0"> 0.00</h2>
+                               </div>
+                               <div class="col-5 col-md-4">
+                                  <div class="box-fund-container">
+                                     <p class="m-0 text-center text-white">Payment Logs</p>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="contact-box mb-3 mt-5">
+                         <form action="https://bakuzone.com/user/dashboard/search" method="get" id="search-dashboard">
+                            <div class="date-range">
+                               <div class="date-start">
+                                  <div class="form-group">
+                                     <div class="flatpickr-container">
+                                        <input value="" type="text" placeholder="Start" class="form-control text-center flatpickr-input" name="start_date" id="startDate" readonly="readonly">
+                                        <a class="input-button" title="toggle" data-toggle="">
+                                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                        </a>
+                                     </div>
+                                  </div>
+                               </div>
+                               <div class="spar">
+                                  <div><i class="fas fa-window-minimize" aria-hidden="true"></i></div>
+                               </div>
+                               <div class="date-end">
+                                  <div class="form-group">
+                                     <div class="flatpickr-container">
+                                        <input value="" type="text" placeholder="End" class="form-control text-center" name="end_date" id="endDate" data-fp-omit="" readonly="readonly">
+                                        <a class="input-button" title="toggle" data-toggle="">
+                                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                        </a>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                            <div class="row mt-3">
+                               <div class="col-sm-8 col-12 ">
+                                  <div class="input-group mb-3">
+                                     <input type="search" name="transaction" value="" class="form-control" placeholder="Search Order ID" aria-describedby="basic-addon">
+                                     <span class="input-group-text" id="basic-addon">
+                                     <button type="submit">
+                                     <img src="https://bakuzone.com/assets/themes/gameshop/images/icon/search.png" alt="...">
+                                     </button>
+                                     </span>
+                                  </div>
+                               </div>
+                               <div class="col-sm-4 col-12 text-right">
+                                  <div class="form-group mb-2">
+                                     <select name="status" id="status-switcher" class="form-control form-select">
+                                        <option value="all">All orders</option>
+                                        <option value="1">Complete</option>
+                                        <option value="0">Pending</option>
+                                     </select>
+                                  </div>
+                               </div>
+                            </div>
+                         </form>
+                      </div>
+                      <div class="row justify-content-between bg-dashboard">
+                         <div class="col-md-12">
+                            <div class="table-container mt-3  bg-transparent ">
+                               <div class="no-orders text-center">
+                                  <img width="200" height="200" src="https://bakuzone.com/assets/themes/gameshop/images/icon2/no-order.svg" alt="">
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </section>
+    </div>
+ </div>
+{% endblock %}
