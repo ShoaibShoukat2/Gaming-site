@@ -25,6 +25,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -34,7 +36,9 @@ SECRET_KEY = 'django-insecure-*(na#^10yyl5x5nyassgrpq#7bf2(tb4**4u%8y7v24@92al+-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['192.168.18.11','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.18.11','127.0.0.1','hamrosubscription.com']
+
+
 
 
 # Application definition
