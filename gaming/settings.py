@@ -41,6 +41,12 @@ ALLOWED_HOSTS = ['192.168.18.11','127.0.0.1','hamrosubscription.com']
 
 
 
+
+
+
+
+
+
 # Application definition
 
 
